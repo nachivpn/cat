@@ -7,29 +7,47 @@ open import Prelude.Function
 open import Prelude.Equality
 open import Prelude.Product
 
-record Category x : Set (suc x) where
+record Category o a : Set (suc (o ⊔ a)) where
   field
-   Object : Set x
-   Arrow  : Object → Object → Set
-   _∙_    : {A B C : Object} → Arrow B C → Arrow A B → Arrow A C
-   Id     : (A : Object) → Arrow A A
-   
+   Object : Set o
+   _⇒_  : Object → Object → Set a 
+   _∙_    : {A B C : Object} → B ⇒ C → A ⇒ B → A ⇒ C
+   Id     : (A : Object) → A ⇒ A
 
    -- properties
    assoc : (A B C D : Object)
-     → (f : Arrow A B) → (g : Arrow B C) → (h : Arrow C D)
+     → (f : A ⇒ B) → (g : B ⇒ C) → (h : C ⇒ D)
      → h ∙ ( g ∙ f) ≡ (h ∙ g) ∙ f
 
    ident : (A B : Object)
-     → (f : Arrow A B)
+     → (f : A ⇒ B)
      → f ∙ (Id A) ≡ f × f ≡ (Id B) ∙ f  
 
-SetCategory : Category (suc zero)
+SetCategory : Category (suc zero) (zero)
 SetCategory = record
                 { Object = Set
-                ; Arrow = λ A B → (A → B)
+                ; _⇒_ = λ A B → (A → B)
                 ; _∙_ = λ f g → λ z → f (g z)
                 ; Id = λ A → id
                 ; assoc = λ A B C D f g h → refl
                 ; ident = λ A B f → refl , refl
                 }
+
+record SetWithRelation : Set₂ where
+  field
+    set : Set₁
+    R : set → set → Set
+
+-- how does one concretely represent a partially ordered set?
+Poset : SetWithRelation
+Poset = record { set = Set ; R = λ A B → {!!} }
+
+PosetCategory : Category (suc zero) (suc zero)
+PosetCategory = record
+                  { Object = {!!}
+                  ; _⇒_ = {!!}
+                  ; _∙_ = {!!}
+                  ; Id = {!!}
+                  ; assoc = {!!}
+                  ; ident = {!!}
+                  }
