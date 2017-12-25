@@ -31,7 +31,9 @@ q ∙ᵢ p =
                     inj-f a a'
                       (inj-g (f a) (f a') gfa≡gfa')
                 }
-
+                
+-- Category of sets with arrows as injective functions
+-- (a restricted version of Sets category) 
 SetsInj : Category (lsuc lzero) (lsuc lzero)
 SetsInj = record{
               Object = Set ;
