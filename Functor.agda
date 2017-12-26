@@ -4,14 +4,21 @@ open import Level as L
 open import Category
 open import Prelude.Equality
 
-Obj = Category.Object
-Arr = Category._⇒_
-Id = Category.Id
 
 record _⇒_ {co ca do da} (C : Category co ca) (D : Category do da) :
-  Set (lsuc (co ⊔ ca ⊔ do ⊔ da) ) where
+  Set (co ⊔ ca ⊔ do ⊔ da) where
+  private
+    module C = Category.Category C
+    module D = Category.Category D
   field
-   F₀ : Obj C → Obj D
-   F₁ : ∀ {C₁ C₂} → Arr C C₁ C₂ → Arr D (F₀ C₁) (F₀ C₂)
-   F-id : ∀ {A : Obj C} → F₁ (Id C A) ≡ Id D (F₀ A)
-   -- F-∙  : ∀ {g f} → F₁ ? ≡ F₁ g ∙ F₁ f  
+   -- object map 
+   F₀   : C.Object → D.Object
+   -- fmap
+   F₁   : ∀ {A B} → A C.⇒ B → (F₀ A) D.⇒ (F₀ B)
+
+   -- functor law: identity
+   F-id : ∀ {A} → F₁ (C.Id A) ≡ D.Id (F₀ A)
+
+   -- functor law: composition
+   F-∙  : ∀ {A' B' C'} (g : B' C.⇒ C') (f : A' C.⇒ B')
+     → F₁ (g C.∙ f) ≡ (F₁ g) D.∙ (F₁ f)
