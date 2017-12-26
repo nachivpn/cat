@@ -5,15 +5,16 @@ open import Level
 open import Prelude.Product
 open import Prelude.Equality
 
+
 R : Set → Set → Set₁
-R A B  = A → B → Set
+R A B  = A × B → Set
 
 _∙ᵣ_ : {A B C : Set} → R B C → R A B → R A C
-RBC ∙ᵣ RAB = λ A C → ∀ {B} → RBC B C → RAB A B
+RBC ∙ᵣ RAB = λ AxC → ∀ {B} → RBC (B , snd AxC) → RAB (fst AxC , B)
 
 Idᵣ : (A : Set) → R A A
-Idᵣ A = λ a₁ a₂ → a₁ ≡ a₂
-
+Idᵣ _ = λ AxB → fst AxB ≡ snd AxB
+ 
 Rel : Category (lsuc lzero) (lsuc lzero)
 Rel = record
         {
@@ -21,7 +22,7 @@ Rel = record
           _⇒_ = R ;
           _∙_ = _∙ᵣ_ ;
           Id = Idᵣ ;
-          assoc = {!!} ;
-          ident = {!!}
+          assoc = λ A B C D f g h → {!!} ;
+          ident = λ A B f → {!!} , {!!}
         }
 
