@@ -42,11 +42,22 @@ g ∙ f = record {
 Id : (A : Poset) → A ⇒ A
 Id = λ A → record { m = id ; monotone = λ a a' a<=a' → a<=a' }
 
+-- category of posets
 Pos : Category (lsuc lzero) lzero
 Pos = record {
-        Object = Poset ;
-        _⇒_ = _⇒_ ;
-        _∙_ = _∙_ ;
-        Id = Id ;
-        assoc = λ A B C D f g h → refl ;
-        ident = λ A B f → refl , refl }
+  Object = Poset ;
+  _⇒_ = _⇒_ ;
+  _∙_ = _∙_ ;
+  Id = Id ;
+  assoc = λ A B C D f g h → refl ;
+  ident = λ A B f → refl , refl }
+
+-- a poset as a category
+PosetAsCategory : Poset → Category lzero lzero
+PosetAsCategory P = let module P = Poset P in record {
+  Object = P.A ;
+  _⇒_ = λ a b → a P.<= b ;
+  _∙_ = λ {A} {B} {C} B<=C A<=B → P.trans A B C A<=B B<=C ;
+  Id = P.reflx ;
+  assoc = λ A B C D f g h → {!!} ;
+  ident = λ A B f → {!!} , {!!} }
