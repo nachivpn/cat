@@ -20,6 +20,7 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
 
    -- Arrow equality
    _≈_ : {A B : Object} (f g : A ⇒ B) → Set e
+   -- TODO: This equivalence relation needs to be refl, sym and trans
 
   infix 19 _≈_
   

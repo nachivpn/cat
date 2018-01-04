@@ -12,13 +12,15 @@ G ∙ F = let module G = _⇒_ G
          in record {
             F₀ = G.F₀ ∘ F.F₀ ;
             F₁ = λ {A} {B} f → G.F₁ (F.F₁ f) ;
+            F-≈ = {!!};
             F-id = {!!} ;
             F-∙ = {!!} }
 
 Id : ∀ {o a e} → (A : Category o a e) → A ⇒ A
-Id A = record { F₀ = id ; F₁ = id ; F-id = refl ; F-∙ = λ g f → refl }
+Id A = let module A = Category.Category A in
+  record { F₀ = id ; F₁ = id ; F-≈ = λ f g f≈g → f≈g ; F-id = {!!} ; F-∙ = {!!} }
 
-Cat : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a) (e)
+Cat : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (e)
 Cat o a e = record
         { Object = Category o a e
         ; _⇒_ = _⇒_
