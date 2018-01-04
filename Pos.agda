@@ -4,24 +4,22 @@ open import Category
 open import Prelude.Function
 open import Prelude.Product
 open import Prelude.Equality as Eq hiding (trans)
+open import Prelude.Unit
 
 -- Partially ordered set
 record Poset : Set₁ where
   field
     A     : Set
-  field
     _<=_  : A → A → Set 
     reflx  : ∀ (a : A) → a <= a
     asymt  : ∀ (a b : A) → a <= b → b <= a → a ≡ b
     trans : ∀ {a b c : A} → a <= b → b <= c → a <= c
+  -- Constructions of <= (proofs) are unique
+  -- This aids the "an arrow per <= relation"
+  -- construction in PosetAsCategory
+  _≈_ : {a b : A} → (f g : a <= b) → Set
+  _≈_ f g = ⊤
 
-record Poset' :  Set₁ where
-  field
-     P : Poset
-  module P = Poset P
-  field
-    _≈_ : ∀ {a b : P.A} → (f : a P.<= b) → (g : a P.<= b) → f ≡ g
-    
 -- Monotonic function
 record _⇒_ (P Q : Poset) : Set where
   private
@@ -44,25 +42,28 @@ Id : (A : Poset) → A ⇒ A
 Id = λ A → record { m = id ; monotone = λ a a' a<=a' → a<=a' }
 
 -- category of posets
-Pos : Category (lsuc lzero) lzero
+Pos : Category (lsuc lzero) lzero lzero
 Pos = record {
   Object = Poset ;
   _⇒_ = _⇒_ ;
   _∙_ = _∙_ ;
   Id = Id ;
+  _≈_ = _≡_ ;
   assoc = λ A B C D f g h → refl ;
-  ident = λ A B f → refl , refl }
+  id-l = λ A B f → refl ;
+  id-r = λ A B f → refl }
 
 -- a poset as a category
-PosetAsCategory : Poset' → Category lzero lzero
-PosetAsCategory P' =
+PosetAsCategory : Poset → Category lzero lzero lzero
+PosetAsCategory P =
   let
-    module P' = Poset' P'
-    module P = P'.P
-   in record {
+    module P = Poset P
+  in record {
   Object = P.A ;
   _⇒_ = λ a b → a P.<= b ;
-  _∙_ = λ {A} {B} {C} B<=C A<=B → P.trans A<=B B<=C ;
+  _∙_ = λ {a} {b} {c} b<=c a<=b → P.trans a<=b b<=c ;
   Id = P.reflx ;
-  assoc = λ A B C D f g h →  (P.trans (P.trans f g) h) P'.≈ (P.trans f (P.trans g h)) ;
-  ident = λ A B f → ((P.trans (P.reflx A)) f P'.≈ f) , f P'.≈ P.trans f (P.reflx B) }
+   _≈_ = P._≈_ ; -- arrows are unique by definition 
+  assoc = λ A B C D f g h → tt ; 
+  id-l = λ A B f → tt ;
+  id-r = λ A B f → tt }

@@ -5,7 +5,7 @@ open import Category
 open import Prelude.Equality
 
 
-record _⇒_ {co ca do da} (C : Category co ca) (D : Category do da) :
+record _⇒_ {co ca ce do da de} (C : Category co ca ce) (D : Category do da de) :
   Set (co ⊔ ca ⊔ do ⊔ da) where
   private
     module C = Category.Category C

@@ -1,7 +1,6 @@
 module Rel where
 
 open import Category
-open import Level
 open import Prelude.Product
 open import Prelude.Equality
 
@@ -27,14 +26,16 @@ Idᵣ _ = λ AxB → fst AxB ≡ snd AxB
 lem : ∀ (X Y : Set) (P : X → Y → Set) → ∃ X (λ x → ∃ Y (λ y → P x y) ) ≡ ∃ Y (λ y → ∃ X (λ x → P x y))
 lem X Y P = {!!}
 
-Rel : Category (lsuc lzero) (lsuc lzero)
+Rel : Category (lsuc lzero) (lsuc lzero) (lsuc lzero)
 Rel = record
         {
           Object = Set ;
           _⇒_ = R ;
           _∙_ = _∙ᵣ_ ;
           Id = Idᵣ ;
+          _≈_ = _≡_ ;
           assoc = λ A B C D f g h → {!!} ;
-          ident = λ A B f → {!!} , {!!}
+          id-l = {!!} ;
+          id-r = {!!}
         }
 

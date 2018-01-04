@@ -1,7 +1,6 @@
 module SetsInj where
 
 open import Category
-open import Prelude.Nat
 open import Prelude.Function
 open import Prelude.Equality
 open import Prelude.Product
@@ -33,15 +32,17 @@ q ∙ᵢ p =
                 }
                 
 -- Category of sets with arrows as injective functions
--- (a restricted version of Sets category) 
-SetsInj : Category (lsuc lzero) (lsuc lzero)
+-- (a restricted version of Sets category)
+SetsInj : Category (lsuc lzero) (lsuc lzero) (lsuc lzero)
 SetsInj = record{
               Object = Set ;
               _⇒_ = _⇒ᵢ_;
               _∙_ = _∙ᵢ_;
               Id = λ A → record { fun = id ; inj = λ a a' ida≡ida' → ida≡ida' } ;
+              _≈_ = _≡_ ;
               assoc = λ A B C D f g h → refl ;
-              ident = λ A B f → refl , refl
+              id-l = λ A B f → refl ;
+              id-r = λ A B f → refl
             }
 
                 
