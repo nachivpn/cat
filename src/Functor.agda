@@ -16,7 +16,7 @@ record _⇒_ {co ca ce do da de} (C : Category co ca ce) (D : Category do da de)
    F₁   : ∀ {A B} → A C.⇒ B → (F₀ A) D.⇒ (F₀ B)
    
    -- ≈ preservation
-   F-≈ : ∀ {A B : C.Object} → (f g : A C.⇒ B) → f C.≈ g → (F₁ f) D.≈ (F₁ g)
+   F-≈ : ∀ {A B : C.Object} {f g : A C.⇒ B} → f C.≈ g → (F₁ f) D.≈ (F₁ g)
 
    -- functor law: identity
    F-id : ∀ {A : C.Object} → F₁ (C.Id A) D.≈ D.Id (F₀ A)

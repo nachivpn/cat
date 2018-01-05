@@ -12,13 +12,19 @@ G ∙ F = let module G = _⇒_ G
          in record {
             F₀ = G.F₀ ∘ F.F₀ ;
             F₁ = λ {A} {B} f → G.F₁ (F.F₁ f) ;
-            F-≈ = λ {A} {B} f g f≈g → {!!};
-            F-id = {!!} ;
-            F-∙ = {!!} }
+            F-≈ = G.F-≈ ∘ F.F-≈ ;
+            F-id = λ {O} → {!!} ;
+            F-∙ = λ g f → {!!} }
 
 Id : ∀ {o a e} → (A : Category o a e) → A ⇒ A
 Id A = let module A = Category.Category A in
-  record { F₀ = id ; F₁ = id ; F-≈ = λ f g f≈g → f≈g ; F-id = {!!} ; F-∙ = {!!} }
+  record {
+    F₀ = id ;
+    F₁ = id ;
+    F-≈ = id ;
+    F-id = λ {A₁} → IsEquivalence.refl (A.isEq {A₁} {A₁}) ;
+    F-∙ = λ {A} {_} {C} g f → IsEquivalence.refl (A.isEq {A} {C})
+  }
 
 Cat : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (e)
 Cat o a e = record
