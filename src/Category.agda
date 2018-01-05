@@ -3,6 +3,7 @@
 module Category where
 
 open import Level as L
+open import Relation.Binary hiding (_⇒_)
 
 lsuc = L.suc
 lzero = L.zero
@@ -19,8 +20,9 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
    Id     : (A : Object) → A ⇒ A
 
    -- Arrow equality
-   _≈_ : {A B : Object} (f g : A ⇒ B) → Set e
-   -- TODO: This equivalence relation needs to be refl, sym and trans
+   _≈_ : {A B : Object} → Rel (A ⇒ B) e
+
+   isEq : {A B : Object} → IsEquivalence (_≈_ {A} {B})
 
   infix 19 _≈_
   
@@ -39,3 +41,10 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
    id-r : (A B : Object)
      → (f : A ⇒ B)
      → f ≈ (Id B) ∙ f
+
+  -- Lemmas
+  
+  -- cong : ∀ {A B C : Object} (x y : A ⇒ B) → x ≈ y → (f : B ⇒ C) → f ∙ x ≈ f ∙ y
+  -- cong x y pr f = {!!}
+
+  

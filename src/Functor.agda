@@ -2,7 +2,6 @@ module Functor where
 
 open import Level as L
 open import Category
-open import Prelude.Equality
 
 
 record _⇒_ {co ca ce do da de} (C : Category co ca ce) (D : Category do da de) :

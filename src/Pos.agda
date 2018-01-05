@@ -3,7 +3,8 @@ module Pos where
 open import Category
 open import Prelude.Function
 open import Prelude.Product
-open import Prelude.Equality as Eq hiding (trans)
+open import Relation.Binary hiding (_⇒_ ; Poset)
+open import Relation.Binary.PropositionalEquality as Eq hiding (trans)
 open import Prelude.Unit
 
 -- Partially ordered set
@@ -19,6 +20,8 @@ record Poset : Set₁ where
   -- construction in PosetAsCategory
   _≈_ : {a b : A} → (f g : a <= b) → Set
   _≈_ f g = ⊤
+  isEq : {a b : A} → IsEquivalence (_≈_ {a} {b})
+  isEq = record { refl = tt ; sym = λ {i} {j} _ → tt ; trans = λ _ _ → tt }
 
 -- Monotonic function
 record _⇒_ (P Q : Poset) : Set where
@@ -49,6 +52,7 @@ Pos = record {
   _∙_ = _∙_ ;
   Id = Id ;
   _≈_ = _≡_ ;
+  isEq = isEquivalence ;
   assoc = λ A B C D f g h → refl ;
   id-l = λ A B f → refl ;
   id-r = λ A B f → refl }
@@ -63,7 +67,8 @@ PosetAsCategory P =
   _⇒_ = λ a b → a P.<= b ;
   _∙_ = λ {a} {b} {c} b<=c a<=b → P.trans a<=b b<=c ;
   Id = P.reflx ;
-   _≈_ = P._≈_ ; -- arrows are unique by definition 
+   _≈_ = P._≈_ ; -- arrows are unique by definition
+  isEq = P.isEq ;
   assoc = λ A B C D f g h → tt ; 
   id-l = λ A B f → tt ;
   id-r = λ A B f → tt }

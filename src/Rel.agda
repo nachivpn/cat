@@ -2,7 +2,7 @@ module Rel where
 
 open import Category
 open import Prelude.Product
-open import Prelude.Equality
+open import Relation.Binary.PropositionalEquality
 
 R : Set → Set → Set₁
 R A B  = A × B → Set
@@ -34,6 +34,7 @@ Rel = record
           _∙_ = _∙ᵣ_ ;
           Id = Idᵣ ;
           _≈_ = _≡_ ;
+          isEq = isEquivalence ;
           assoc = λ A B C D f g h → {!!} ;
           id-l = {!!} ;
           id-r = {!!}

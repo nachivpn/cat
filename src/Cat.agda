@@ -4,15 +4,15 @@ open import Category
 open import Level
 open import Functor
 open import Prelude.Function
-open import Prelude.Equality
+open import Relation.Binary hiding (_⇒_)
 
-_∙_ : ∀ {o a e} {A B C : Category o a e} → B ⇒ C → A ⇒ B → A ⇒ C
+_∙_ : ∀ {o a e} {C D E : Category o a e} → D ⇒ E → C ⇒ D → C ⇒ E
 G ∙ F = let module G = _⇒_ G
             module F = _⇒_ F
          in record {
             F₀ = G.F₀ ∘ F.F₀ ;
             F₁ = λ {A} {B} f → G.F₁ (F.F₁ f) ;
-            F-≈ = {!!};
+            F-≈ = λ {A} {B} f g f≈g → {!!};
             F-id = {!!} ;
             F-∙ = {!!} }
 
@@ -27,6 +27,7 @@ Cat o a e = record
         ; _∙_ = _∙_
         ; Id = Id
         ; _≈_ = {!!}
+        ; isEq = {!!}
         ; assoc = {!!}
         ; id-l = {!!}
         ; id-r = {!!}

@@ -2,7 +2,7 @@ module SetsInj where
 
 open import Category
 open import Prelude.Function
-open import Prelude.Equality
+open import Relation.Binary.PropositionalEquality
 open import Prelude.Product
 
 -- injective function
@@ -40,6 +40,7 @@ SetsInj = record{
               _∙_ = _∙ᵢ_;
               Id = λ A → record { fun = id ; inj = λ a a' ida≡ida' → ida≡ida' } ;
               _≈_ = _≡_ ;
+              isEq = isEquivalence ;
               assoc = λ A B C D f g h → refl ;
               id-l = λ A B f → refl ;
               id-r = λ A B f → refl
