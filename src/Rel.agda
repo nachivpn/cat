@@ -44,9 +44,24 @@ assoc-∙ A B C D f g h = eq lem₁ lem₂
     lem₂ : (y : Σ A (λ _ → D)) → ((h ∙ᵣ g) ∙ᵣ f) y → (h ∙ᵣ (g ∙ᵣ f)) y
     lem₂ _ < b , (fab , < c , (gbc , hcd) >) > = < c , (< b , (fab , gbc) > , hcd) >
 
+id-l : (A B : Set) (f : R A B) → (f ∙ᵣ Idᵣ A) ≈ᵣ f
+id-l A B f = eq lem₁ lem₂
+  where
+  lem₁ : ∀ x → (f ∙ᵣ Idᵣ A) x → f x
+  lem₁ (.a , b) < a , (refl , fab) > = fab
+  lem₂ : ∀ y → f y → (f ∙ᵣ Idᵣ A) y
+  lem₂ (a , b) fab = < a , (refl , fab) >
+
+id-r : (A B : Set) (f : R A B) → f ≈ᵣ (Idᵣ B ∙ᵣ f)
+id-r A B f = eq lem₁ lem₂
+  where
+  lem₁ : ∀ x → f x → (Idᵣ B ∙ᵣ f) x
+  lem₁ (a , b) fab = < b , (fab , refl) >
+  lem₂ : ∀ y → (Idᵣ B ∙ᵣ f) y → f y
+  lem₂ (a , b) < .b , (fab , refl) > = fab
+  
 Rel : Category (lsuc lzero) (lsuc lzero) (lzero)
-Rel = record
-        {
+Rel = record {
           Object = Set ;
           _⇒_ = R ;
           _∙_ = _∙ᵣ_ ;
@@ -54,7 +69,6 @@ Rel = record
           _≈_ = _≈ᵣ_ ;
           isEq = record { refl = refl-≈ᵣ; sym = sym-≈ᵣ ; trans = trans-≈ᵣ } ;
           assoc = assoc-∙ ;
-          id-l = {!!} ;
-          id-r = {!!}
+          id-l = id-l ;
+          id-r = id-r
         }
-
