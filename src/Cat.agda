@@ -7,14 +7,19 @@ open import Prelude.Function
 open import Relation.Binary hiding (_⇒_)
 
 _∙_ : ∀ {o a e} {C D E : Category o a e} → D ⇒ E → C ⇒ D → C ⇒ E
-G ∙ F = let module G = _⇒_ G
+_∙_ {E = E} G F = let
+            module G = _⇒_ G
             module F = _⇒_ F
+            module E = Category.Category E
          in record {
             F₀ = G.F₀ ∘ F.F₀ ;
             F₁ = λ {A} {B} f → G.F₁ (F.F₁ f) ;
             F-≈ = G.F-≈ ∘ F.F-≈ ;
-            F-id = λ {O} → {!!} ;
-            F-∙ = λ g f → {!!} }
+            F-id = λ {O} →
+              IsEquivalence.trans E.isEq (G.F-≈ F.F-id) G.F-id ;
+            F-∙ = λ g f →
+              IsEquivalence.trans E.isEq
+                (G.F-≈ (F.F-∙ g f)) (G.F-∙ (F.F₁ g) (F.F₁ f))}
 
 Id : ∀ {o a e} → (A : Category o a e) → A ⇒ A
 Id A = let module A = Category.Category A in
