@@ -22,8 +22,6 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
    -- Arrow equality
    _≈_ : {A B : Object} → Rel (A ⇒ B) e
 
-   isEq : {A B : Object} → IsEquivalence (_≈_ {A} {B})
-
   infix 19 _≈_
   
   field
@@ -42,9 +40,12 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
      → (f : A ⇒ B)
      → f ≈ (Id B) ∙ f
 
-  -- Lemmas
+   isEq : {A B : Object} → IsEquivalence (_≈_ {A} {B})
+
+   congl : ∀ {A B C : Object} (x y : A ⇒ B) → x ≈ y → (f : B ⇒ C) → f ∙ x ≈ f ∙ y
+
+   congr : ∀ {A B C : Object} (x y : B ⇒ C) → x ≈ y → (f : A ⇒ B) → x ∙ f ≈ y ∙ f
+
   
-  -- cong : ∀ {A B C : Object} (x y : A ⇒ B) → x ≈ y → (f : B ⇒ C) → f ∙ x ≈ f ∙ y
-  -- cong x y pr f = {!!}
 
   

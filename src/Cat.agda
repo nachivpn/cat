@@ -42,4 +42,6 @@ Cat o a e = record
         ; assoc = {!!}
         ; id-l = {!!}
         ; id-r = {!!}
+        ; congl = {!!}
+        ; congr = {!!}
         }

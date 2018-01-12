@@ -57,6 +57,8 @@ MonoidCategory M = let module M = Monoid M in record
                 ; assoc = λ _ _ _ _ f g h → M.assoc h g f
                 ; id-l = λ _ _ f → M.unit-l f
                 ; id-r = λ _ _ f → M.unit-r f
+                ; congl = λ x y x≡y f → cong (M._∙_ f) x≡y
+                ; congr = λ x y x≡y f → cong (flip M._∙_ f) x≡y
                 }
 
 
@@ -68,6 +70,12 @@ sym' (eq p) = eq (sym ∘ p)
 
 trans' : ∀ {A B : Monoid} {F G H : A ⇒ B} → F ≈ G → G ≈ H → F ≈ H
 trans' (eq p) (eq q) = eq λ x → trans (p x) (q x)
+
+congl : {A B C : Monoid} (g h : A ⇒ B) → g ≈ h → (f : B ⇒ C) → (f ∙ g) ≈ (f ∙ h)
+congl g h (eq p) f = let module f = _⇒_ f in eq λ x → cong f.f (p x)
+
+congr : {A B C : Monoid} (g h : B ⇒ C) → g ≈ h → (f : A ⇒ B) → (g ∙ f) ≈ (h ∙ f)
+congr g h (eq p) f = let module f = _⇒_ f in eq λ x → p (f.f x)
 
 Mon : Category (lsuc lzero) lzero lzero
 Mon = record
@@ -83,6 +91,8 @@ Mon = record
                 ; assoc = λ A B C D f g h → eq λ _ → refl
                 ; id-l = λ A B f → eq λ _ → refl
                 ; id-r = λ A B f → eq λ _ → refl
+                ; congl = congl
+                ; congr = congr
                 }
 
 private

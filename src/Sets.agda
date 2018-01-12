@@ -15,4 +15,6 @@ SetCat = record
                 ; assoc = λ A B C D f g h → refl
                 ; id-l = λ A B f → refl
                 ; id-r = λ A B f → refl
+                ; congl = {!!}
+                ; congr = {!!}
                 }

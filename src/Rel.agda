@@ -59,6 +59,24 @@ id-r A B f = eq lem₁ lem₂
   lem₁ (a , b) fab = < b , (fab , refl) >
   lem₂ : ∀ y → (Idᵣ B ∙ᵣ f) y → f y
   lem₂ (a , b) < .b , (fab , refl) > = fab
+
+congl : {A B C : Set} (x y : R A B) →
+  x ≈ᵣ y → (f : R B C) → (f ∙ᵣ x) ≈ᵣ (f ∙ᵣ y)
+congl x y (eq y2x x2y) f = eq lem₁ lem₂
+  where
+  lem₁ : ∀ z → (f ∙ᵣ x) z → (f ∙ᵣ y) z
+  lem₁ (a , c) < b , (fbc , xab) > = < b , (y2x (a , b) fbc , xab) >
+  lem₂ : ∀ z → (f ∙ᵣ y) z → (f ∙ᵣ x) z
+  lem₂ (a , c) < b , (yab , fbc) > = < b , (x2y (a , b) yab , fbc) >
+
+congr : {A B C : Set} (x y : R B C) →
+  x ≈ᵣ y → (f : R A B) → (x ∙ᵣ f) ≈ᵣ (y ∙ᵣ f)
+congr x y (eq x2y y2x) f = eq lem₁ lem₂
+  where
+  lem₁ : ∀ x₁ → (x ∙ᵣ f) x₁ → (y ∙ᵣ f) x₁
+  lem₁ (a , c) < b , (fab , xbc) > = < b , (fab , x2y (b , c) xbc) >
+  lem₂ : ∀ y₁ → (y ∙ᵣ f) y₁ → (x ∙ᵣ f) y₁
+  lem₂ (a , c) < b , (fab , ybc) > = < b , (fab , y2x (b , c) ybc) >
   
 Rel : Category (lsuc lzero) (lsuc lzero) (lzero)
 Rel = record {
@@ -70,5 +88,7 @@ Rel = record {
           isEq = record { refl = refl-≈ᵣ; sym = sym-≈ᵣ ; trans = trans-≈ᵣ } ;
           assoc = assoc-∙ ;
           id-l = id-l ;
-          id-r = id-r
+          id-r = id-r ;
+          congl = congl ;
+          congr = congr
         }
