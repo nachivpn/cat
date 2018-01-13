@@ -2,6 +2,10 @@
 
 (reverse chronological order)
 
+### 13/01/18
+
+* Tried defining equality of functors (morphisms in Cat) today. One option is the equality of the underlying object and arrow maps. Functional extensionality could be an option. But this gets tricky as `F.F₀ x != G.F₀ x` and hence `(F.F₀ A) D.⇒ (F.F₀ B)` and `(G.F₀ A) D.⇒ (G.F₀ B)` are of different types, and `D.≈` cannot be used to define the equality of these morphisms of different types. How does one define a "heterogenous" equality between such morphisms?
+
 ### 12/01/18
   
 * Tried replacing `congl` and `congr` with substitution. It is possible to define congruence in terms of substitution, but "native" `subst` is difficult (not possible?) to prove in some cases that are not propositional equality (Eg: PosetAsCategory); so discarded changes. Alternatively, one could define equality such that subst is available (as a constructor, for example), or simply postulate it.
