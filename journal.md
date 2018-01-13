@@ -4,6 +4,7 @@
 
 ### 13/01/18
 
+* Natural isomorphism between functors maybe suitable for `≈` of functors. Need to come back to this (Cat) much later!
 * Tried defining equality of functors (morphisms in Cat) today. One option is the equality of the underlying object and arrow maps. Functional extensionality could be an option. But this gets tricky as `F.F₀ x != G.F₀ x` and hence `(F.F₀ A) D.⇒ (F.F₀ B)` and `(G.F₀ A) D.⇒ (G.F₀ B)` are of different types, and `D.≈` cannot be used to define the equality of these morphisms of different types. How does one define a "heterogenous" equality between such morphisms?
 
 ### 12/01/18
