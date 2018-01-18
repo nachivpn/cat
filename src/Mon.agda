@@ -126,9 +126,16 @@ private
             { Car = Bool
             ; _∙_ = _∨_
             ; u = false
-            ; assoc = λ a b c → {!!}
-            ; unit-l = λ x → {!!}
+            ; assoc = assoc-or
+            ; unit-l = unit-l-or
             ; unit-r = λ x → refl }
+            where
+            assoc-or : ∀ a b c → a ∨ b ∨ c ≡ (a ∨ b) ∨ c
+            assoc-or false b c = refl
+            assoc-or true  b c = refl
+            unit-l-or : (x : Bool) → x ∨ false ≡ x
+            unit-l-or false = refl
+            unit-l-or true = refl
 
   N2T : ⟨N,+,0⟩ ⇒ True
   N2T = record { f = λ _ → tt ; pres-∙ = refl ; pres-u = refl }
