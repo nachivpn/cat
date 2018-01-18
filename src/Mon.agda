@@ -6,6 +6,7 @@ open import Relation.Binary.PropositionalEquality
 open import Prelude.Function
 open import Data.Nat
 open import Data.Nat.Properties
+open import Data.Bool
 
 record Monoid : Set₁ where
   field
@@ -106,5 +107,46 @@ private
     unit-l = λ x → +-identityʳ x ;
     unit-r = λ x → +-identityˡ x }
 
+  True : Monoid
+  True = record
+           { Car = ⊤
+           ; _∙_ = λ _ _ → tt
+           ; u = tt
+           ; assoc = λ a b c → refl
+           ; unit-l = lem₁
+           ; unit-r = lem₂ }
+             where
+             lem₁ : (x : ⊤) → tt ≡ x
+             lem₁ tt = refl
+             lem₂ : (x : ⊤) → x ≡ tt
+             lem₂ tt = refl
+
+  BoolOr : Monoid
+  BoolOr = record
+            { Car = Bool
+            ; _∙_ = _∨_
+            ; u = false
+            ; assoc = λ a b c → {!!}
+            ; unit-l = λ x → {!!}
+            ; unit-r = λ x → refl }
+
+  N2T : ⟨N,+,0⟩ ⇒ True
+  N2T = record { f = λ _ → tt ; pres-∙ = refl ; pres-u = refl }
+
+  N2B : ⟨N,+,0⟩ ⇒ BoolOr
+  N2B = record { f = f ; pres-∙ = λ {x} {y} → lem x y  ; pres-u = refl }
+    where
+    f : Monoid.Car ⟨N,+,0⟩ → Monoid.Car BoolOr
+    f zero = false
+    f (suc _) = true
+    lem : ∀ x y → f (x + y) ≡ f x ∨ f y
+    lem zero _    = refl
+    lem (suc _) _ = refl
+  
   ⟨N,+,0⟩-cat : Category lzero lzero lzero
   ⟨N,+,0⟩-cat = MonoidCategory ⟨N,+,0⟩
+
+  BoolOr-cat : Category lzero lzero lzero
+  BoolOr-cat = MonoidCategory BoolOr
+   
+  -- TODO: Functor from ⟨N,+,0⟩-cat to  BoolOr-cat
