@@ -26,7 +26,7 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
   
   field
    -- associativity law of arrow composition
-   assoc : (A B C D : Object)
+   assoc : {A B C D : Object}
      → (f : A ⇒ B) → (g : B ⇒ C) → (h : C ⇒ D)
      → h ∙ ( g ∙ f) ≈ (h ∙ g) ∙ f
 

@@ -55,7 +55,7 @@ MonoidCategory M = let module M = Monoid M in record
                 ; Id = λ _ → M.u
                 ; _≈_ = _≡_
                 ; isEq = isEquivalence
-                ; assoc = λ _ _ _ _ f g h → M.assoc h g f
+                ; assoc = λ f g h → M.assoc h g f
                 ; id-l = λ _ _ f → M.unit-l f
                 ; id-r = λ _ _ f → M.unit-r f
                 ; congl = λ x y x≡y f → cong (M._∙_ f) x≡y
@@ -89,7 +89,7 @@ Mon = record
                   refl = refl' ;
                   sym = sym' ;
                   trans = trans' }
-                ; assoc = λ A B C D f g h → eq λ _ → refl
+                ; assoc = λ f g h → eq λ _ → refl
                 ; id-l = λ A B f → eq λ _ → refl
                 ; id-r = λ A B f → eq λ _ → refl
                 ; congl = congl

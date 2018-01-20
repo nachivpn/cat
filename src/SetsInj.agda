@@ -41,7 +41,7 @@ SetsInj = record{
               Id = λ A → record { fun = id ; inj = λ a a' ida≡ida' → ida≡ida' } ;
               _≈_ = _≡_ ;
               isEq = isEquivalence ;
-              assoc = λ A B C D f g h → refl ;
+              assoc = λ f g h → refl ;
               id-l = λ A B f → refl ;
               id-r = λ A B f → refl;
               congl = {!!};

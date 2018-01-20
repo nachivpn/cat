@@ -4,19 +4,13 @@ open import Category
 open import Prelude.Function
 open import Prelude.Product
 open import Relation.Binary.PropositionalEquality
+open import Logic.Predicate
 
 R : Set → Set → Set₁
 R A B  = A × B → Set
 
 data _≈ᵣ_ {A B} (P Q : R A B) : Set where
   eq :  (∀ x → P x → Q x) → (∀ y → Q y → P y) → P ≈ᵣ Q
-
-data ∃ (A : Set) (P : A → Set) : Set where
- <_,_> : (a : A) → P a → ∃ A P
-
-∃-elim : {A : Set} → {P : A → Set} → {Q : Set}
-  → ((a : A) → P a → Q) → ∃ A P → Q
-∃-elim f < a , p > = f a p
 
 _∧_ = _×_
 
@@ -86,7 +80,7 @@ Rel = record {
           Id = Idᵣ ;
           _≈_ = _≈ᵣ_ ;
           isEq = record { refl = refl-≈ᵣ; sym = sym-≈ᵣ ; trans = trans-≈ᵣ } ;
-          assoc = assoc-∙ ;
+          assoc = assoc-∙ _ _ _ _ ;
           id-l = id-l ;
           id-r = id-r ;
           congl = congl ;
