@@ -2,6 +2,11 @@
 
 (reverse chronological order)
 
+### 20/01/18
+
+* From a discussion with Jannis on Thursday for solving the problem of defining equality of functors (say `F,G : C -> D`), one suggested option to circumvent the mismatch in types is to define `F₀` equality as isomorphism, i.e., `iso : {x} -> F.F₀ x ≅ G.F₀ x`, and then use this to define equality of `F₁` as `(F.F₁ f) D.≈ (back iso D.∘ G.F₁ f D.∘ forth iso)`. 
+* Looking closer at the suggested solution reveals that this is indeed a result of the naturality conditions which arise from a natural isomorphism between `F` and `G`! Hence, natural isomorphism appears promising as an option to define `≈` of functors.
+
 ### 13/01/18
 
 * Natural isomorphism between functors maybe suitable for `≈` of functors. Need to come back to this (Cat) much later!
