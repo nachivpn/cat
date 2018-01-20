@@ -1,4 +1,4 @@
-module Pos where
+module Category.Pos where
 
 open import Category
 open import Prelude.Function

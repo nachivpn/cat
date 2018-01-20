@@ -1,4 +1,4 @@
-module Sets where
+module Category.Sets where
 
 open import Category
 open import Prelude.Function

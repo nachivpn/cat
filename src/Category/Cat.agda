@@ -1,4 +1,4 @@
-module Cat where
+module Category.Cat where
 
 open import Category
 open import Level

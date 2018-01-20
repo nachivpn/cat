@@ -1,4 +1,4 @@
-module Rel where
+module Category.Rel where
 
 open import Category
 open import Prelude.Function

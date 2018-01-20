@@ -1,4 +1,4 @@
-module Mon where
+module Category.Mon where
 
 open import Category
 open import Data.Unit

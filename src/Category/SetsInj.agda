@@ -1,4 +1,4 @@
-module SetsInj where
+module Category.SetsInj where
 
 open import Category
 open import Prelude.Function
