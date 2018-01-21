@@ -46,6 +46,12 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
 
    congr : ∀ {A B C : Object} (x y : B ⇒ C) → x ≈ y → (f : A ⇒ B) → x ∙ f ≈ y ∙ f
 
+
+  dom : ∀ {A B : Object} → A ⇒ B → Object
+  dom {A = A} _ = A
+
+  cod : ∀ {A B : Object} → A ⇒ B → Object
+  cod {B = B} _ = B
   
 
   
