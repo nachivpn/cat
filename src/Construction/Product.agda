@@ -2,8 +2,9 @@ module Construction.Product where
 
 open import Level
 open import Category
+open import Functor
 open import Prelude.Product
-open import Relation.Binary
+open import Relation.Binary hiding (_⇒_)
 
 _x_ : ∀ {o a e} (C D : Category o a e) → Category o a e
 C x D = let 
@@ -33,3 +34,22 @@ C x D = let
                C.congr (fst x) (fst y) (fst p) (fst f) ,
                D.congr (snd x) (snd y) (snd p) (snd f)
        }
+
+
+-- Projection functors
+
+π₁ : ∀ {o a e} {C D : Category o a e} → (C x D) ⇒ C
+π₁ = record 
+  { F₀ = fst
+  ; F₁ = fst
+  ; F-≈ = fst
+  ; F-id = λ {A} → {!!}
+  ; F-∙ = λ g f → {!!} }
+
+π₂ : ∀ {o a e} {C D : Category o a e} → (C x D) ⇒ D
+π₂ = record 
+  { F₀ = snd
+  ; F₁ = snd
+  ; F-≈ = snd
+  ; F-id = λ {A} → {!!}
+  ; F-∙ = λ g f → {!!} }
