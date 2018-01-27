@@ -52,6 +52,9 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
 
   cod : ∀ {A B : Object} → A ⇒ B → Object
   cod {B = B} _ = B
-  
 
-  
+  Hom : (A B : Object) → Setoid a e
+  Hom A B = record {
+    Carrier = A ⇒ B ;
+    _≈_ = _≈_ ;
+    isEquivalence = isEq }
