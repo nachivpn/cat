@@ -29,8 +29,8 @@ sym-≈ᵣ (eq p q) = eq q p
 trans-≈ᵣ : ∀ {A B} {R S T : R A B} → R ≈ᵣ S → S ≈ᵣ T → R ≈ᵣ T
 trans-≈ᵣ (eq p q) (eq x y) = eq (λ x₁ z → x x₁ (p x₁ z)) (λ y₁ z → q y₁ (y y₁ z))
 
-assoc-∙ : (A B C D : Set) (f : R A B) (g : R B C) (h : R C D) → (h ∙ᵣ (g ∙ᵣ f)) ≈ᵣ ((h ∙ᵣ g) ∙ᵣ f)
-assoc-∙ A B C D f g h = eq lem₁ lem₂
+assoc-∙ : {A B C D : Set} (f : R A B) (g : R B C) (h : R C D) → (h ∙ᵣ (g ∙ᵣ f)) ≈ᵣ ((h ∙ᵣ g) ∙ᵣ f)
+assoc-∙ {A} {B} {C} {D} f g h = eq lem₁ lem₂
   where
     -- the following lemmas are simply a swap of ∃ c ∃ b and ∃ b ∃ c 
     lem₁ : ∀ x → (h ∙ᵣ (g ∙ᵣ f)) x → ((h ∙ᵣ g) ∙ᵣ f) x
@@ -38,16 +38,16 @@ assoc-∙ A B C D f g h = eq lem₁ lem₂
     lem₂ : (y : Σ A (λ _ → D)) → ((h ∙ᵣ g) ∙ᵣ f) y → (h ∙ᵣ (g ∙ᵣ f)) y
     lem₂ _ < b , (fab , < c , (gbc , hcd) >) > = < c , (< b , (fab , gbc) > , hcd) >
 
-id-l : (A B : Set) (f : R A B) → (f ∙ᵣ Idᵣ A) ≈ᵣ f
-id-l A B f = eq lem₁ lem₂
+id-l : {A B : Set} {f : R A B} → (f ∙ᵣ Idᵣ A) ≈ᵣ f
+id-l {A} {B} {f} = eq lem₁ lem₂
   where
   lem₁ : ∀ x → (f ∙ᵣ Idᵣ A) x → f x
   lem₁ (.a , b) < a , (refl , fab) > = fab
   lem₂ : ∀ y → f y → (f ∙ᵣ Idᵣ A) y
   lem₂ (a , b) fab = < a , (refl , fab) >
 
-id-r : (A B : Set) (f : R A B) → f ≈ᵣ (Idᵣ B ∙ᵣ f)
-id-r A B f = eq lem₁ lem₂
+id-r : {A B : Set} {f : R A B} → f ≈ᵣ (Idᵣ B ∙ᵣ f)
+id-r {A} {B} {f} = eq lem₁ lem₂
   where
   lem₁ : ∀ x → f x → (Idᵣ B ∙ᵣ f) x
   lem₁ (a , b) fab = < b , (fab , refl) >
@@ -80,8 +80,9 @@ Rel = record {
           Id = Idᵣ ;
           _≈_ = _≈ᵣ_ ;
           isEq = record { refl = refl-≈ᵣ; sym = sym-≈ᵣ ; trans = trans-≈ᵣ } ;
-          assoc = assoc-∙ _ _ _ _ ;
-          id-l = id-l ;
+          assoc = λ {_} {_} {_} {_} {f} {g} {h}
+            → assoc-∙ f g h ;
+          id-l = id-l;
           id-r = id-r ;
           congl = congl ;
           congr = congr

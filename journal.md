@@ -5,7 +5,7 @@
 ### 27/01/18
 * Added first pure category theory proof today! Inverses of an isomorphism are indeed unique!
 * Used setoid equational reasoning library for proof, quite convenient
-* need to make arguments of id-l and id-r implicit, they are quite cumbersome to use in proofs now
+* need to make arguments of id-l and id-r implicit, they are quite cumbersome to use in proofs now (done!)
 * how to avoid giving "isEq" as argument to sym/trans/refl proofs?
 
 ### 20/01/18

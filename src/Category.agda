@@ -27,17 +27,17 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
   field
    -- associativity law of arrow composition
    assoc : {A B C D : Object}
-     → (f : A ⇒ B) → (g : B ⇒ C) → (h : C ⇒ D)
+     {f : A ⇒ B} {g : B ⇒ C} {h : C ⇒ D}
      → h ∙ ( g ∙ f) ≈ (h ∙ g) ∙ f
 
    -- left identity law
-   id-l : (A B : Object)
-     → (f : A ⇒ B)
+   id-l : {A B : Object}
+     → {f : A ⇒ B}
      → f ∙ (Id A) ≈ f
 
    -- right identity law
-   id-r : (A B : Object)
-     → (f : A ⇒ B)
+   id-r : {A B : Object}
+     → {f : A ⇒ B}
      → f ≈ (Id B) ∙ f
 
    isEq : {A B : Object} → IsEquivalence (_≈_ {A} {B})

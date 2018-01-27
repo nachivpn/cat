@@ -12,6 +12,7 @@ open import Data.Nat
 module Core {o a e} {C : Category o a e} where
 
   open Category.Category C
+  
 
   record _≅_ (A B : Object) : Set (a Level.⊔ e) where
     field
@@ -32,16 +33,17 @@ module Core {o a e} {C : Category o a e} where
       sym = IsEquivalence.sym
       f = forth iso
       f⁻¹ = back iso
-    in begin⟨ Hom B A ⟩
+    in
+    begin⟨ Hom B A ⟩
       g
-          ≈⟨ sym isEq (id-l _ _ _) ⟩
+          ≈⟨ sym isEq id-l ⟩
       g ∙ Id B
-          ≈⟨ congl (Id B) (f ∙  f⁻¹) (sym isEq (fnb iso)) g ⟩
+          ≈⟨ congl (Id B) (f ∙ f⁻¹) (sym isEq (fnb iso)) g ⟩
       g ∙ (f ∙ f⁻¹)
-          ≈⟨ assoc _ _ _  ⟩
-      ( g ∙ f ) ∙  f⁻¹
+          ≈⟨ assoc ⟩
+      (g ∙ f) ∙  f⁻¹
           ≈⟨ congr (g ∙ f) (Id A) p f⁻¹ ⟩
       Id A ∙  f⁻¹
-           ≈⟨ sym isEq (id-r _ _ _) ⟩
-       f⁻¹
-      ∎
+           ≈⟨ sym isEq id-r ⟩
+      f⁻¹
+     ∎

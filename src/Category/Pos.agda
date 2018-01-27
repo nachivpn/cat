@@ -61,9 +61,9 @@ Pos = record {
   Id = Id ;
   _≈_ = _≡_ ;
   isEq = isEquivalence ;
-  assoc = λ f g h → refl ;
-  id-l = λ A B f → refl ;
-  id-r = λ A B f → refl ;
+  assoc = refl ;
+  id-l = refl ;
+  id-r = refl ;
   congl = congl ;
   congr = congr }
 
