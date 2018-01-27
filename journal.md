@@ -2,6 +2,12 @@
 
 (reverse chronological order)
 
+### 27/01/18
+* Added first pure category theory proof today! Inverses of an isomorphism are indeed unique!
+* Used setoid equational reasoning library for proof, quite convenient
+* need to make arguments of id-l and id-r implicit, they are quite cumbersome to use in proofs now
+* how to avoid giving "isEq" as argument to sym/trans/refl proofs?
+
 ### 20/01/18
 
 * From a discussion with Jannis on Thursday for solving the problem of defining equality of functors (say `F,G : C -> D`), one suggested option to circumvent the mismatch in types is to define `F₀` equality as isomorphism, i.e., `iso : {x} -> F.F₀ x ≅ G.F₀ x`, and then use this to define equality of `F₁` as `(F.F₁ f) D.≈ (back iso D.∘ G.F₁ f D.∘ forth iso)`. 
