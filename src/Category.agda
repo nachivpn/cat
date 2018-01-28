@@ -4,6 +4,7 @@ module Category where
 
 open import Level as L
 open import Relation.Binary hiding (_⇒_)
+open import Relation.Binary.SetoidReasoning
 
 lsuc = L.suc
 lzero = L.zero
@@ -23,6 +24,7 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
    _≈_ : {A B : Object} → Rel (A ⇒ B) e
 
   infix 19 _≈_
+  infixl 20 _∙_
   
   field
    -- associativity law of arrow composition
@@ -58,3 +60,21 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
     Carrier = A ⇒ B ;
     _≈_ = _≈_ ;
     isEquivalence = isEq }
+
+  refl  = IsEquivalence.sym
+  sym   = IsEquivalence.sym
+  trans = IsEquivalence.trans
+
+  -- Lemmas
+  
+  assoc4 : ∀ {A B C D E : Object}
+    { f : A ⇒ B } {g : B ⇒ C} {h : C ⇒ D} {i : D ⇒ E} →
+    (i ∙ h) ∙ (g ∙ f) ≈ i ∙ (h ∙ g) ∙ f
+  assoc4 {A} {B} {C} {D} {E} {f = f} {g = g} {h = h} {i = i} =
+    begin⟨ Hom A E ⟩
+      (i ∙ h) ∙ (g ∙ f)
+        ≈⟨ assoc ⟩
+      (i ∙ h) ∙ g ∙ f
+         ≈⟨ congr _ _ (sym isEq assoc) f ⟩
+      i ∙ (h ∙ g) ∙ f
+    ∎ 

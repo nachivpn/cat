@@ -21,13 +21,18 @@ module Core {o a e} (C : Category o a e) where
          → B ⇒ₐ C → A ⇒ₐ B → A ⇒ₐ C
   (g₁ , g₂) ∙ₐ (f₁ , f₂) = g₁ C.∙ f₁ , g₂ C.∙ f₂
 
+  _≈ₐ_ : {A : ∃₂ (λ A₁ A₂ → A₁ ⇒ A₂)}
+         {B : ∃₂ (λ B₁ B₂ → B₁ ⇒ B₂)}
+         → Rel (A ⇒ₐ B) e
+  (g₁ , g₂) ≈ₐ (h₁ , h₂) =  g₁ C.≈ h₁ × g₂ C.≈ h₂
+
   C⟶ : Category (a ⊔ o) (a) e
   C⟶ = record
               { Object = ∃₂ λ A B → A C.⇒ B 
               ; _⇒_ = _⇒ₐ_
               ; _∙_ = λ {A} {B} {C} g f → _∙ₐ_ {A} {B} {C} g f
               ; Id = λ _ → Id _ , Id _
-              ; _≈_ = {!!}
+              ; _≈_ = λ {A} {B} → _≈ₐ_ {A} {B}
               ; assoc = {!!}
               ; id-l = {!!}
               ; id-r = {!!}
