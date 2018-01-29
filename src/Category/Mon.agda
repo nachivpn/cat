@@ -1,6 +1,6 @@
 module Category.Mon where
 
-open import Category
+open import Category hiding (refl ; sym ; trans)
 open import Data.Unit
 open import Relation.Binary.PropositionalEquality
 open import Prelude.Function

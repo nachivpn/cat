@@ -1,6 +1,6 @@
 module Category.Pos where
 
-open import Category
+open import Category hiding (refl ; sym ; trans)
 open import Prelude.Function
 open import Prelude.Product
 open import Relation.Binary hiding (_⇒_ ; Poset)

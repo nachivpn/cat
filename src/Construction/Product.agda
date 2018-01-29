@@ -1,3 +1,4 @@
+
 module Construction.Product where
 
 open import Level
@@ -6,14 +7,13 @@ open import Functor
 open import Prelude.Product
 open import Relation.Binary hiding (_⇒_)
 
-_x_ : ∀ {o a e} (C D : Category o a e) → Category o a e
-C x D = let 
-     module C = Category.Category C
-     module D = Category.Category D
-     refl = IsEquivalence.refl
-     sym = IsEquivalence.sym
-     trans = IsEquivalence.trans
-  in record
+module Core {o a e} {C D : Category o a e} where
+
+  module C = Category.Category C
+  module D = Category.Category D
+   
+  _x_ : (C D : Category o a e) → Category o a e
+  C x D = record
        { Object = C.Object × D.Object
        ; _⇒_ = λ o₁ o₂ →  (fst o₁ C.⇒ fst o₂) × (snd o₁ D.⇒ snd o₂)
        ; _∙_ = λ f g → (fst f C.∙ fst g) , (snd f D.∙ snd g)
@@ -38,18 +38,18 @@ C x D = let
 
 -- Projection functors
 
-π₁ : ∀ {o a e} {C D : Category o a e} → (C x D) ⇒ C
-π₁ = record 
-  { F₀ = fst
-  ; F₁ = fst
-  ; F-≈ = fst
-  ; F-id = λ {A} → {!!}
-  ; F-∙ = λ g f → {!!} }
+  π₁ : (C x D) ⇒ C
+  π₁ = record 
+    { F₀ = fst
+    ; F₁ = fst
+    ; F-≈ = fst
+    ; F-id =  λ {A} → refl C.isEq
+    ; F-∙ = λ _ _ → refl C.isEq }
 
-π₂ : ∀ {o a e} {C D : Category o a e} → (C x D) ⇒ D
-π₂ = record 
-  { F₀ = snd
-  ; F₁ = snd
-  ; F-≈ = snd
-  ; F-id = λ {A} → {!!}
-  ; F-∙ = λ g f → {!!} }
+  π₂ : (C x D) ⇒ D
+  π₂ = record 
+    { F₀ = snd
+    ; F₁ = snd
+    ; F-≈ = snd
+    ; F-id = λ {A} → refl D.isEq
+    ; F-∙ = λ _ _ → refl D.isEq }

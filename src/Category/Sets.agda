@@ -1,6 +1,6 @@
 module Category.Sets where
 
-open import Category
+open import Category hiding (refl ; sym ; trans)
 open import Prelude.Function
 open import Relation.Binary.PropositionalEquality
 

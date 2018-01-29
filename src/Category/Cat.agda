@@ -16,9 +16,9 @@ _∙_ {E = E} G F = let
             F₁ = λ {A} {B} f → G.F₁ (F.F₁ f) ;
             F-≈ = G.F-≈ ∘ F.F-≈ ;
             F-id = λ {O} →
-              IsEquivalence.trans E.isEq (G.F-≈ F.F-id) G.F-id ;
+              trans E.isEq (G.F-≈ F.F-id) G.F-id ;
             F-∙ = λ g f →
-              IsEquivalence.trans E.isEq
+              trans E.isEq
                 (G.F-≈ (F.F-∙ g f)) (G.F-∙ (F.F₁ g) (F.F₁ f))}
 
 Id : ∀ {o a e} → (A : Category o a e) → A ⇒ A
@@ -27,8 +27,8 @@ Id A = let module A = Category.Category A in
     F₀ = id ;
     F₁ = id ;
     F-≈ = id ;
-    F-id = λ {A₁} → IsEquivalence.refl (A.isEq {A₁} {A₁}) ;
-    F-∙ = λ {A} {_} {C} g f → IsEquivalence.refl (A.isEq {A} {C})
+    F-id = λ {A₁} → refl (A.isEq {A₁} {A₁}) ;
+    F-∙ = λ {A} {_} {C} g f → refl (A.isEq {A} {C})
   }
 
 Cat : ∀ (o a e : Level) → Category (lsuc (o ⊔ a ⊔ e)) (o ⊔ a ⊔ e) (e)

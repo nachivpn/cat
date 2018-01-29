@@ -8,6 +8,9 @@ open import Relation.Binary.SetoidReasoning
 
 lsuc = L.suc
 lzero = L.zero
+refl  = IsEquivalence.refl
+sym   = IsEquivalence.sym
+trans = IsEquivalence.trans
 
 record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
   field
@@ -60,10 +63,6 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
     Carrier = A ⇒ B ;
     _≈_ = _≈_ ;
     isEquivalence = isEq }
-
-  refl  = IsEquivalence.sym
-  sym   = IsEquivalence.sym
-  trans = IsEquivalence.trans
 
   -- Lemmas
   
