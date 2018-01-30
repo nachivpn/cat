@@ -2,6 +2,11 @@
 
 (reverse chronological order)
 
+### 30/01/18
+* Slowly stepping into "Abstract structures" chapter
+* Proofs written using `Relation.Binary.SetoidReasoning` are stunning! Totally worth it!
+* Added mono- & epi- morphisms
+
 ### 27/01/18
 * Added first pure category theory proof today! Inverses of an isomorphism are indeed unique!
 * Used setoid equational reasoning library for proof, quite convenient

@@ -6,6 +6,8 @@ open import Prelude.Product
 open import Relation.Binary hiding (_⇒_ ; Poset)
 open import Relation.Binary.PropositionalEquality as Eq hiding (trans)
 open import Prelude.Unit
+open import EpiMono
+open import Iso
 
 -- Partially ordered set
 record Poset : Set₁ where
@@ -79,3 +81,17 @@ PosetAsCategory P =
     Id = P.reflx ;
     _≈_ = P._≈_  -- arrows are unique by definition
   }
+
+module _ {P : Poset} where
+
+  C = PosetAsCategory P
+  module C = Category.Category C
+  
+  open EpiMono.Core {C = C}
+  open Iso.Core {C = C}
+
+  epiArrs : ∀ {p q : C.Object} {f : p C.⇒ q} → epi f 
+  epiArrs = record { epic = λ x → tt }
+
+  monoArrs : ∀ {p q : C.Object} {f : p C.⇒ q} → mono f 
+  monoArrs = record { monic = λ x → tt }
