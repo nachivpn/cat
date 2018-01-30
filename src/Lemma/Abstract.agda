@@ -35,4 +35,21 @@ module _ {o a e} {C : Category o a e} where
         j ∎  }
 
   isoIsMono : ∀ {A B} {f : A ⇒ B} → iso f → mono f
-  isoIsMono iso = record { monic = λ x → {!!} }
+  isoIsMono {A} {B} {f} iso =
+    record { monic = λ {C} {i} {j} fi≈fj →
+      begin⟨ Hom C A ⟩
+        i
+          ≈⟨ id-r ⟩
+        Id A ∙ i
+          ≈⟨ congr _ _ (sym isEq (bnf iso)) i ⟩
+        back iso ∙ forth iso ∙ i
+          ≈⟨ sym isEq assoc ⟩
+        back iso ∙ (forth iso ∙ i)
+          ≈⟨ congl _ _ fi≈fj (back iso) ⟩
+        back iso ∙ (forth iso ∙ j)
+          ≈⟨ assoc ⟩
+        (back iso ∙ forth iso) ∙ j
+          ≈⟨ congr _ _ (bnf iso) j ⟩
+        Id A ∙ j
+          ≈⟨ sym isEq id-r ⟩
+        j ∎      }
