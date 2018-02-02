@@ -64,6 +64,12 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
     _≈_ = _≈_ ;
     isEquivalence = isEq }
 
+  substl : ∀ {A B C : Object} {x y : B ⇒ C} {f : A ⇒ B} → x ≈ y → x ∙ f ≈ y ∙ f
+  substl {A} {B} {C} {x} {y} {f} x≈y = congr x y x≈y f
+
+  substr : ∀ {A B C : Object} {x y : A ⇒ B} {f : B ⇒ C} → x ≈ y → f ∙ x ≈ f ∙ y
+  substr {A} {B} {C} {x} {y} {f} x≈y = congl x y x≈y f
+  
   -- Lemmas
   
   assoc4 : ∀ {A B C D E : Object}

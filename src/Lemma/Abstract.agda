@@ -6,6 +6,7 @@ open import Category
 open import Iso
 open import EpiMono
 open import Relation.Binary.SetoidReasoning
+open import Data.Product
 
 module _ {o a e} {C : Category o a e} where
 
@@ -53,3 +54,23 @@ module _ {o a e} {C : Category o a e} where
         Id A ∙ j
           ≈⟨ sym isEq id-r ⟩
         j ∎      }
+
+  splitMonoIsMono : ∀ {A B} {f : A ⇒ B} → split-mono f → mono f
+  splitMonoIsMono {A} {B} {f} record { l-inv = (g , gf≈Id) } =
+    record { monic = λ {C} {i} {j} fi≈fj →
+      begin⟨ Hom C A ⟩
+        i
+          ≈⟨ id-r ⟩
+        Id A ∙ i
+          ≈⟨ substl (sym isEq gf≈Id) ⟩
+        g ∙ f ∙ i
+          ≈⟨ sym isEq assoc ⟩
+        g ∙ (f ∙ i)
+          ≈⟨ substr fi≈fj ⟩
+        g ∙ (f ∙ j)
+          ≈⟨ assoc ⟩
+        g ∙ f ∙ j
+          ≈⟨ substl gf≈Id ⟩
+        Id A ∙ j
+          ≈⟨ sym isEq id-r ⟩
+       j ∎ } 
