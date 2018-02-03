@@ -2,6 +2,11 @@
 
 (reverse chronological order)
 
+### 03/02/18
+* added split-epi and split-mono
+* added `substl` and `substr` as sugar with implicit parameters for `congr` and `congl` (respectively).
+* Need to add a "sugar lemma" for expanding and contracting on Id
+
 ### 30/01/18
 * Slowly stepping into "Abstract structures" chapter
 * Proofs written using `Relation.Binary.SetoidReasoning` are stunning! Totally worth it!
