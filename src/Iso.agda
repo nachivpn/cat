@@ -7,7 +7,7 @@ open import Relation.Binary hiding (_⇒_)
 open import Relation.Binary.SetoidReasoning
 open import Data.Product
 
-module Core {o a e} {C : Category o a e} where
+module Core {o a e} (C : Category o a e) where
 
   open Category.Category C
 

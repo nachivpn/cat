@@ -5,6 +5,7 @@ module Category where
 open import Level as L
 open import Relation.Binary hiding (_⇒_)
 open import Relation.Binary.SetoidReasoning
+open import Data.Product using (∃)
 
 lsuc = L.suc
 lzero = L.zero
@@ -69,6 +70,9 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
 
   substr : ∀ {A B C : Object} {x y : A ⇒ B} {f : B ⇒ C} → x ≈ y → f ∙ x ≈ f ∙ y
   substr {A} {B} {C} {x} {y} {f} x≈y = congl x y x≈y f
+
+  ∃!_⇒_ : (A B : Object) → Set (a ⊔ e)
+  ∃! A ⇒ B  = ∃ λ (x : A ⇒ B) → (∀ {y : A ⇒ B} → x ≈ y)
   
   -- Lemmas
   

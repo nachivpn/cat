@@ -5,7 +5,7 @@ open import Category
 open import Data.Product
 
 
-module Core {o a e} {C : Category o a e} where
+module Core {o a e} (C : Category o a e) where
 
   open Category.Category C
 

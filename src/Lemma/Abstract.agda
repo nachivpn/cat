@@ -7,13 +7,17 @@ open import Iso
 open import EpiMono
 open import Relation.Binary.SetoidReasoning
 open import Data.Product
+open import InitTerm
 
 module _ {o a e} {C : Category o a e} where
 
   open Category.Category C
-  open Iso.Core {C = C}
-  open EpiMono.Core {C = C}
+  open Iso.Core C
+  open EpiMono.Core C
+  open InitTerm.Core C
   open iso
+  open initial
+  open terminal
   
   isoIsEpi : ∀ {A B} {f : A ⇒ B} → iso f → epi f
   isoIsEpi {A} {B} {f} iso =
@@ -121,4 +125,6 @@ module _ {o a e} {C : Category o a e} where
                  ≈⟨ fnb isog ⟩
                Id C ∎ }
 
-  
+  initialsAreUnique : ∀ {A B} → initial A → initial B → A ≅ B
+  initialsAreUnique {A} {B} initA initB =
+    record { ∃iso = {!!} , {!!} }
