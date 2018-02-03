@@ -73,4 +73,24 @@ module _ {o a e} {C : Category o a e} where
           ≈⟨ substl gf≈Id ⟩
         Id A ∙ j
           ≈⟨ sym isEq id-r ⟩
-       j ∎ } 
+       j ∎ }
+
+  splitEpiIsEpi : ∀ {A B} {f : A ⇒ B} → split-epi f → epi f
+  splitEpiIsEpi {A} {B} {f} record { r-inv = (g , fg≈Id) } =
+    record { epic = λ {C} {i} {j} if≈jf →
+      begin⟨ Hom B C ⟩
+      i
+        ≈⟨ sym isEq id-l ⟩
+      i ∙ Id B
+        ≈⟨ substr (sym isEq fg≈Id) ⟩
+      i ∙ (f ∙ g)
+        ≈⟨ assoc ⟩
+      (i ∙ f) ∙ g
+        ≈⟨ substl if≈jf ⟩
+      (j ∙ f) ∙ g
+        ≈⟨ sym isEq assoc ⟩
+      j ∙ (f ∙ g)
+        ≈⟨ substr fg≈Id ⟩
+      j ∙ Id B
+        ≈⟨ id-l ⟩
+      j ∎  }

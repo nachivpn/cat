@@ -23,7 +23,7 @@ module Core {o a e} {C : Category o a e} where
 
   record split-epi {A B} (f : A ⇒ B) : Set (o ⊔ a ⊔ e) where
     field
-     l-inv : ∃ λ g → f ∙ g ≈ Id B
+     r-inv : ∃ λ g → f ∙ g ≈ Id B
 
 
 
