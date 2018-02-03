@@ -94,3 +94,31 @@ module _ {o a e} {C : Category o a e} where
       j ∙ Id B
         ≈⟨ id-l ⟩
       j ∎  }
+
+  iso∙isoIsIso : ∀ {A B C} {f : A ⇒ B} {g : B ⇒ C} → iso f → iso g → iso (g ∙ f)
+  iso∙isoIsIso {A} {B} {C} {f} {g} isof isog =
+    record { inv = inv isof ∙ inv isog ;
+             bnf = 
+               begin⟨ Hom A A ⟩
+               (back isof ∙ back isog) ∙ (g ∙ f)
+                 ≈⟨ assoc4 ⟩
+               back isof ∙ (back isog ∙ g) ∙ f
+                 ≈⟨ substl (substr (bnf isog)) ⟩
+               back isof ∙ (Id B) ∙ f
+                 ≈⟨ substl id-l ⟩
+               back isof ∙ f
+                 ≈⟨ bnf isof ⟩
+               Id A ∎ ;
+             fnb =
+               begin⟨ Hom C C ⟩
+               (g ∙ f) ∙ (back isof ∙ back isog) 
+                 ≈⟨ assoc4 ⟩
+               g ∙ (f ∙ back isof) ∙ back isog
+                 ≈⟨ substl (substr (fnb isof)) ⟩
+               g ∙ Id B ∙ back isog 
+                 ≈⟨ substl id-l ⟩
+               g ∙ back isog
+                 ≈⟨ fnb isog ⟩
+               Id C ∎ }
+
+  
