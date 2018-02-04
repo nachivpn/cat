@@ -5,7 +5,8 @@ module Category where
 open import Level as L
 open import Relation.Binary hiding (_⇒_)
 open import Relation.Binary.SetoidReasoning
-open import Data.Product using (∃)
+open import Data.Unit public
+import Data.Product as DP using (∃! ; ∃ ; _×_ ; proj₁ ; proj₂)
 
 lsuc = L.suc
 lzero = L.zero
@@ -71,10 +72,23 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
   substr : ∀ {A B C : Object} {x y : A ⇒ B} {f : B ⇒ C} → x ≈ y → f ∙ x ≈ f ∙ y
   substr {A} {B} {C} {x} {y} {f} x≈y = congl x y x≈y f
 
+  ∃!_⇒_,_ : ∀ {b} (A B : Object) (P : A ⇒ B → Set b) → Set (a ⊔ e ⊔ b)
+  ∃! A ⇒ B , P = DP.∃! _≈_ λ x → P x
+
   ∃!_⇒_ : (A B : Object) → Set (a ⊔ e)
-  ∃! A ⇒ B  = ∃ λ (x : A ⇒ B) → (∀ {y : A ⇒ B} → x ≈ y)
-  
-  -- Lemmas
+  ∃! A ⇒ B  = ∃! A ⇒ B , λ x → ⊤
+
+  witness : ∀ {b} {A B : Object} {P : A ⇒ B → Set b} → ∃! A ⇒ B , P → A ⇒ B
+  witness = DP.proj₁
+
+  -- Universal Mapping Property
+  ump : ∀ {b} {A B : Object} {P : A ⇒ B → Set b} → (p : ∃! A ⇒ B , P)
+    → ({y : A ⇒ B} → P y → witness p ≈ y)
+  ump p = DP.proj₂ (DP.proj₂ p)
+
+  ------------
+  -- Lemmas --
+  ------------
   
   assoc4 : ∀ {A B C D E : Object}
     { f : A ⇒ B } {g : B ⇒ C} {h : C ⇒ D} {i : D ⇒ E} →

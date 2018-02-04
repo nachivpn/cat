@@ -126,27 +126,23 @@ module _ {o a e} {C : Category o a e} where
   initialsAreIsom : ∀ {A B} → initial A → initial B → A ≅ B
   initialsAreIsom {A} {B} (init A2) (init B2) = 
     record {
-      ∃iso = f ,
+      ∃iso = witness (A2 B) ,
       record {
-        inv = b ;
-        bnf = trans isEq (sym isEq !A2A) !A2A ;
-        fnb = trans isEq (sym isEq !B2B) !B2B } }
+        inv = witness (B2 A) ;
+        bnf = trans isEq (sym isEq (!A2A tt)) (!A2A tt); 
+        fnb = trans isEq (sym isEq (!B2B tt)) (!B2B tt) } }
     where
-    f = proj₁ (A2 B)
-    b = proj₁ (B2 A)
-    !A2A = proj₂ (A2 A) -- Id A
-    !B2B = proj₂ (B2 B) -- Id B
-  
+    !A2A = ump (A2 A)
+    !B2B = ump (B2 B)
+     
   terminalsAreIsom : ∀ {A B} → terminal A → terminal B → A ≅ B
   terminalsAreIsom {A} {B} (term 2A) (term 2B) =
     record {
-      ∃iso = f ,
+      ∃iso = witness (2B A) ,
       record {
-        inv = b ;
-        bnf = trans isEq (sym isEq !A2A) !A2A ;
-        fnb = trans isEq (sym isEq !B2B) !B2B } }
+        inv = witness (2A B) ;
+        bnf = trans isEq (sym isEq (!A2A tt)) (!A2A tt) ;
+        fnb = trans isEq (sym isEq (!B2B tt)) (!B2B tt)} }
     where
-    f = proj₁ (2B A)
-    b = proj₁ (2A B)
-    !A2A = proj₂ (2A A) -- Id A
-    !B2B = proj₂ (2B B) -- Id B
+    !A2A = ump (2A A)
+    !B2B = ump (2B B)
