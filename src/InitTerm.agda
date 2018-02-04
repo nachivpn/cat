@@ -7,10 +7,8 @@ module Core {o a e} (C : Category o a e) where
 
   open Category.Category C 
 
-  record initial (O : Object) : Set (o ⊔ a ⊔ e)  where
-    field
-      init : ∀ {C : Object} → ∃! O ⇒ C
+  data initial (O : Object) : Set (o ⊔ a ⊔ e)  where
+      init : (∀ (C : Object) → ∃! O ⇒ C) → initial O
 
-  record terminal (T : Object) : Set (o ⊔ a ⊔ e) where
-    field
-      term : ∀ {C : Object} → ∃! C ⇒ T
+  data terminal (T : Object) : Set (o ⊔ a ⊔ e) where
+      term : (∀ (C : Object) → ∃! C ⇒ T) → terminal T
