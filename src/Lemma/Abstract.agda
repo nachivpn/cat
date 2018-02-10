@@ -149,7 +149,7 @@ module _ {o a e} {C : Category o a e} where
     !B2B = ump (2B B)
 
 
-  module _ {A B : Object} where
+  private
     open Product.Core C
     open _x_
     
