@@ -81,6 +81,9 @@ record Category o a e : Set (lsuc (o ⊔ a ⊔ e)) where
   witness : ∀ {b} {A B : Object} {P : A ⇒ B → Set b} → ∃! A ⇒ B , P → A ⇒ B
   witness = DP.proj₁
 
+  witness-pr : ∀ {b} {A B : Object} {P : A ⇒ B → Set b} → (p : ∃! A ⇒ B , P) → P (witness p)
+  witness-pr p = DP.proj₁ (DP.proj₂ p)
+
   -- Universal Mapping Property
   ump : ∀ {b} {A B : Object} {P : A ⇒ B → Set b} → (p : ∃! A ⇒ B , P)
     → ({y : A ⇒ B} → P y → witness p ≈ y)

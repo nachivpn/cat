@@ -8,6 +8,7 @@ open import EpiMono
 open import Relation.Binary.SetoidReasoning
 open import Data.Product
 open import InitTerm
+open import Product
 
 module _ {o a e} {C : Category o a e} where
 
@@ -146,3 +147,68 @@ module _ {o a e} {C : Category o a e} where
     where
     !A2A = ump (2A A)
     !B2B = ump (2B B)
+
+
+  module _ {A B : Object} where
+    open Product.Core C
+    open _x_
+    
+    prod-unique : ∀ {A B} {P Q : A x B} → prod P ≅ prod Q
+    prod-unique {A} {B} {P} {Q} =
+      let
+        module P = _x_ P
+        module Q = _x_ Q
+        testPonQ = Q.universal P.prod P.π₁ P.π₂
+        testQonP = P.universal Q.prod Q.π₁ Q.π₂
+        testPonP = P.universal P.prod P.π₁ P.π₂
+        testQonQ = Q.universal Q.prod Q.π₁ Q.π₂
+        f = witness testPonQ
+        b = witness testQonP
+        f-pr = witness-pr testPonQ
+        b-pr = witness-pr testQonP
+        umpP₁ : witness testPonP ≈ Id P.prod
+        umpP₁ = ump testPonP (id-l , id-l)
+        umpP₂ : witness testPonP ≈ b ∙ f
+        umpP₂ = ump testPonP (
+          (begin⟨ Hom P.prod A ⟩
+            P.π₁ ∙ (b ∙ f)
+              ≈⟨ assoc ⟩
+            (P.π₁ ∙ b) ∙ f
+              ≈⟨ substl (proj₁ b-pr) ⟩
+            Q.π₁ ∙ f
+              ≈⟨ proj₁ f-pr ⟩
+            P.π₁ ∎) ,
+          (begin⟨ Hom P.prod B ⟩
+            P.π₂ ∙ (b ∙ f)
+              ≈⟨ assoc ⟩
+            (P.π₂ ∙ b) ∙ f
+              ≈⟨ substl (proj₂ b-pr) ⟩
+            Q.π₂ ∙ f
+              ≈⟨ proj₂ f-pr ⟩
+            P.π₂ ∎) )
+        umpQ₁ : witness testQonQ ≈ Id Q.prod
+        umpQ₁ = ump testQonQ (id-l , id-l)
+        umpQ₂ : witness testQonQ ≈ f ∙ b
+        umpQ₂ = ump testQonQ (
+          (begin⟨ Hom Q.prod A ⟩
+            Q.π₁ ∙ (f ∙ b)
+              ≈⟨ assoc ⟩
+            (Q.π₁ ∙ f) ∙ b
+              ≈⟨ substl (proj₁ f-pr) ⟩
+            P.π₁ ∙ b
+              ≈⟨ proj₁ b-pr ⟩
+            Q.π₁ ∎) ,
+          (begin⟨ Hom Q.prod B ⟩
+            Q.π₂ ∙ (f ∙ b)
+               ≈⟨ assoc ⟩
+            (Q.π₂ ∙ f) ∙ b
+              ≈⟨ substl (proj₂ f-pr) ⟩
+            P.π₂ ∙ b
+              ≈⟨ proj₂ b-pr ⟩
+            Q.π₂ ∎))
+      in record {
+        ∃iso = f ,
+        record {
+          inv = b ;
+          bnf = trans isEq (sym isEq umpP₂) umpP₁;
+          fnb = trans isEq (sym isEq umpQ₂) umpQ₁ } }
