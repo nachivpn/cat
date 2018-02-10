@@ -14,11 +14,11 @@ module Core {o a e} (C : Category o a e) where
 
   record _x_ (A B : Object) : Set (o ⊔ a ⊔ e) where
     field
-     prod      : Object
-     π₁        : prod ⇒ A
-     π₂        : prod ⇒ B
+     pobj      : Object
+     π₁        : pobj ⇒ A
+     π₂        : pobj ⇒ B
      universal : ∀ (Z : Object) (z₁ : Z ⇒ A) (z₂ : Z ⇒ B) →
-       ∃! Z ⇒ prod , λ u → π₁ ∙ u ≈ z₁ DP.× π₂ ∙ u ≈ z₂
+       ∃! Z ⇒ pobj , λ u → π₁ ∙ u ≈ z₁ DP.× π₂ ∙ u ≈ z₂
 
 
 
