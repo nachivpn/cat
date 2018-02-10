@@ -2,6 +2,12 @@
 
 (reverse chronological order)
 
+### 10/02/18
+* added product and natural transformation constructions
+* closed open goals in Op category, removed use of flip (makes goals look ugly)
+* proof for "products are unique upto iso" was surprisingly a little tricky to close; took some time to wrap my head around the representation of universality properties, but turned out to be rather simple after the "aha" moment of realizing that `witness-pr` was needed for discharging the properties of the universal object
+* going to do a few more category theory proofs before coming back to ground with implementation of concrete instances
+
 ### 03/02/18
 * added split-epi and split-mono
 * added `substl` and `substr` as sugar with implicit parameters for `congr` and `congl` (respectively).
