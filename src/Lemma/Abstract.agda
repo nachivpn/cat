@@ -158,10 +158,10 @@ module _ {o a e} {C : Category o a e} where
       let
         module P = _x_ P
         module Q = _x_ Q
-        testPonQ = Q.universal P.pobj P.π₁ P.π₂
-        testQonP = P.universal Q.pobj Q.π₁ Q.π₂
-        testPonP = P.universal P.pobj P.π₁ P.π₂
-        testQonQ = Q.universal Q.pobj Q.π₁ Q.π₂
+        testPonQ = Q.uni P.pobj P.π₁ P.π₂
+        testQonP = P.uni Q.pobj Q.π₁ Q.π₂
+        testPonP = P.uni P.pobj P.π₁ P.π₂
+        testQonQ = Q.uni Q.pobj Q.π₁ Q.π₂
         f = witness testPonQ
         b = witness testQonP
         f-pr = witness-pr testPonQ

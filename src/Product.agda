@@ -17,7 +17,7 @@ module Core {o a e} (C : Category o a e) where
      pobj      : Object
      π₁        : pobj ⇒ A
      π₂        : pobj ⇒ B
-     universal : ∀ (Z : Object) (z₁ : Z ⇒ A) (z₂ : Z ⇒ B) →
+     uni : ∀ (Z : Object) (z₁ : Z ⇒ A) (z₂ : Z ⇒ B) →
        ∃! Z ⇒ pobj , λ u → π₁ ∙ u ≈ z₁ DP.× π₂ ∙ u ≈ z₂
 
 
