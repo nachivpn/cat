@@ -1,21 +1,21 @@
-module Lemma.Abstract where
+module Lemma.AbstractMorphism where
 
+-- Lemmas about special morphisms
 
 open import Level
 open import Category
-open import Iso
-open import EpiMono
-open import Relation.Binary.SetoidReasoning
-open import Data.Product
-open import InitTerm
-open import Product
 
-module _ {o a e} {C : Category o a e} where
 
+module Core {o a e} {C : Category o a e} where
+
+  open import Iso
+  open import EpiMono
+  open import Relation.Binary.SetoidReasoning
+  open import Data.Product
+  
   open Category.Category C
   open Iso.Core C
   open EpiMono.Core C
-  open InitTerm.Core C
   open iso
   
   isoIsEpi : ∀ {A B} {f : A ⇒ B} → iso f → epi f
@@ -123,92 +123,6 @@ module _ {o a e} {C : Category o a e} where
                g ∙ back isog
                  ≈⟨ fnb isog ⟩
                Id C ∎ }
-  
-  initialsAreIsom : ∀ {A B} → initial A → initial B → A ≅ B
-  initialsAreIsom {A} {B} (init A2) (init B2) = 
-    record {
-      ∃iso = witness (A2 B) ,
-      record {
-        inv = witness (B2 A) ;
-        bnf = trans isEq (sym isEq (!A2A tt)) (!A2A tt); 
-        fnb = trans isEq (sym isEq (!B2B tt)) (!B2B tt) } }
-    where
-    !A2A = ump (A2 A)
-    !B2B = ump (B2 B)
-     
-  terminalsAreIsom : ∀ {A B} → terminal A → terminal B → A ≅ B
-  terminalsAreIsom {A} {B} (term 2A) (term 2B) =
-    record {
-      ∃iso = witness (2B A) ,
-      record {
-        inv = witness (2A B) ;
-        bnf = trans isEq (sym isEq (!A2A tt)) (!A2A tt) ;
-        fnb = trans isEq (sym isEq (!B2B tt)) (!B2B tt)} }
-    where
-    !A2A = ump (2A A)
-    !B2B = ump (2B B)
 
 
-  private
-    open Product.Core C
-    open _x_
-    
-    prod-unique : ∀ {A B} {P Q : A x B} → pobj P ≅ pobj Q
-    prod-unique {A} {B} {P} {Q} =
-      let
-        module P = _x_ P
-        module Q = _x_ Q
-        testPonQ = Q.uni P.pobj P.π₁ P.π₂
-        testQonP = P.uni Q.pobj Q.π₁ Q.π₂
-        testPonP = P.uni P.pobj P.π₁ P.π₂
-        testQonQ = Q.uni Q.pobj Q.π₁ Q.π₂
-        f = witness testPonQ
-        b = witness testQonP
-        f-pr = witness-pr testPonQ
-        b-pr = witness-pr testQonP
-        umpP₁ : witness testPonP ≈ Id P.pobj
-        umpP₁ = ump testPonP (id-l , id-l)
-        umpP₂ : witness testPonP ≈ b ∙ f
-        umpP₂ = ump testPonP (
-          (begin⟨ Hom P.pobj A ⟩
-            P.π₁ ∙ (b ∙ f)
-              ≈⟨ assoc ⟩
-            (P.π₁ ∙ b) ∙ f
-              ≈⟨ substl (proj₁ b-pr) ⟩
-            Q.π₁ ∙ f
-              ≈⟨ proj₁ f-pr ⟩
-            P.π₁ ∎) ,
-          (begin⟨ Hom P.pobj B ⟩
-            P.π₂ ∙ (b ∙ f)
-              ≈⟨ assoc ⟩
-            (P.π₂ ∙ b) ∙ f
-              ≈⟨ substl (proj₂ b-pr) ⟩
-            Q.π₂ ∙ f
-              ≈⟨ proj₂ f-pr ⟩
-            P.π₂ ∎) )
-        umpQ₁ : witness testQonQ ≈ Id Q.pobj
-        umpQ₁ = ump testQonQ (id-l , id-l)
-        umpQ₂ : witness testQonQ ≈ f ∙ b
-        umpQ₂ = ump testQonQ (
-          (begin⟨ Hom Q.pobj A ⟩
-            Q.π₁ ∙ (f ∙ b)
-              ≈⟨ assoc ⟩
-            (Q.π₁ ∙ f) ∙ b
-              ≈⟨ substl (proj₁ f-pr) ⟩
-            P.π₁ ∙ b
-              ≈⟨ proj₁ b-pr ⟩
-            Q.π₁ ∎) ,
-          (begin⟨ Hom Q.pobj B ⟩
-            Q.π₂ ∙ (f ∙ b)
-               ≈⟨ assoc ⟩
-            (Q.π₂ ∙ f) ∙ b
-              ≈⟨ substl (proj₂ f-pr) ⟩
-            P.π₂ ∙ b
-              ≈⟨ proj₂ b-pr ⟩
-            Q.π₂ ∎))
-      in record {
-        ∃iso = f ,
-        record {
-          inv = b ;
-          bnf = trans isEq (sym isEq umpP₂) umpP₁;
-          fnb = trans isEq (sym isEq umpQ₂) umpQ₁ } }
+ 
