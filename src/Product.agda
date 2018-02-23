@@ -20,6 +20,14 @@ module Core {o a e} (C : Category o a e) where
      uni : ∀ (Z : Object) (z₁ : Z ⇒ A) (z₂ : Z ⇒ B) →
        ∃! Z ⇒ pobj , λ u → π₁ ∙ u ≈ z₁ DP.× π₂ ∙ u ≈ z₂
 
+  record _+_ (A B : Object) : Set (o ⊔ a ⊔ e) where
+    field
+     cpobj     : Object
+     i₁        : A ⇒ cpobj
+     i₂        : B ⇒ cpobj
+     uni : ∀ (Z : Object) (z₁ : A ⇒ Z) (z₂ : B ⇒ Z) →
+       ∃! cpobj ⇒ Z , λ u → u ∙ i₁ ≈ z₁ DP.× u ∙ i₂ ≈ z₂
+
 
 
   

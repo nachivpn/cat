@@ -2,6 +2,17 @@
 
 (reverse chronological order)
 
+### 20/02/18
+* Got stuck trying to prove ump of co-products for STLC category (using propositional equality)
+* The morphism - which must be proved to be unique - `Either A B ⇒ Z` is defined using pattern matching as:
+    ```Haskell
+    u : ∀ {A B Z} → (z₁ : A ⇒ Z) (z₂ : B ⇒ Z) → Either A B ⇒ Z
+    u z₁ z₂ (left x) = z₁ x
+    u z₁ z₂ (right x) = z₂ x 
+    ``` 
+  proving the uniqueness of `u` requires a proof of `u (y ∙ left) (y ∙ right) ≈ y`, where y is another morphism such that `y ∙ left ≈ z₁` and `y ∙ right ≈ z₂`. This appears impossible to do using propositional equality (needs more clarity on why).
+* Need to use functional extensionality to solve this problem
+
 ### 10/02/18
 * added product and natural transformation constructions
 * closed open goals in Op category, removed use of flip (makes goals look ugly)
