@@ -4,7 +4,6 @@ open import Level
 open import Category
 open import Data.Product
 
-
 module Core {o a e} (C : Category o a e) where
 
   open Category.Category C
@@ -24,8 +23,6 @@ module Core {o a e} (C : Category o a e) where
   record split-epi {A B} (f : A ⇒ B) : Set (o ⊔ a ⊔ e) where
     field
      r-inv : ∃ λ g → f ∙ g ≈ Id B
-
-
 
    
 

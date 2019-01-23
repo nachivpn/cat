@@ -4,8 +4,8 @@ open import Level as L
 open import Category
 
 
-record _⇒_ {co ca ce do da de} (C : Category co ca ce) (D : Category do da de) :
-  Set (co ⊔ ca ⊔ ce ⊔ do ⊔ da ⊔ de) where
+record _⇒_ {co ca ce do' da de} (C : Category co ca ce) (D : Category do' da de) :
+  Set (co ⊔ ca ⊔ ce ⊔ do' ⊔ da ⊔ de) where
   private
     module C = Category.Category C
     module D = Category.Category D

@@ -1,14 +1,20 @@
-module InitTerm where
-
 open import Level
 open import Category
 
-module Core {o a e} (C : Category o a e) where
+module InitTerm where
 
-  open Category.Category C 
+record HasInitial {o a e} (C : Category o a e) : Set (o ⊔ a ⊔ e) where
+  open Category.Category C
+  field
+    𝟘    : Object
+    uni  : (∀ (C : Object) → ∃! 𝟘 ⇒ C)
 
-  data initial (O : Object) : Set (o ⊔ a ⊔ e)  where
-      init : (∀ (C : Object) → ∃! O ⇒ C) → initial O
+open HasInitial
 
-  data terminal (T : Object) : Set (o ⊔ a ⊔ e) where
-      term : (∀ (C : Object) → ∃! C ⇒ T) → terminal T
+
+record HasTerminal {o a e} (C : Category o a e) : Set (o ⊔ a ⊔ e) where
+  open Category.Category C
+  field
+    𝟙    : Object
+    uni  : (∀ (C : Object) → ∃! C ⇒ 𝟙)
+

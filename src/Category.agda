@@ -6,7 +6,7 @@ open import Level as L
 open import Relation.Binary hiding (_⇒_)
 open import Relation.Binary.SetoidReasoning
 open import Data.Unit public
-import Data.Product as DP using (∃! ; ∃ ; _×_ ; proj₁ ; proj₂)
+open import Data.Product as DP using (∃! ; ∃ ; _×_ ; proj₁ ; proj₂)
 
 lsuc = L.suc
 lzero = L.zero

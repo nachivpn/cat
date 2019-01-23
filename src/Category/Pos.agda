@@ -1,19 +1,15 @@
 module Category.Pos where
 
 open import Category hiding (refl ; sym ; trans)
-open import Prelude.Function
-open import Prelude.Product
+open import CatPrelude.Function using (_∘_ ; id)
 open import Relation.Binary hiding (_⇒_ ; Poset)
-open import Relation.Binary.PropositionalEquality as Eq hiding (trans)
-open import Prelude.Unit
-open import EpiMono
-open import Iso
+open import Relation.Binary.PropositionalEquality using (_≡_ ; isEquivalence ; refl)
 
 -- Partially ordered set
 record Poset : Set₁ where
   field
     Car    : Set
-    _<=_   : Car → Car → Set 
+    _<=_   : Car → Car → Set
     reflx  : ∀ (a : Car) → a <= a
     asymt  : ∀ (a b : Car) → a <= b → b <= a → a ≡ b
     trans  : ∀ {a b c : Car} → a <= b → b <= c → a <= c
@@ -24,6 +20,7 @@ record Poset : Set₁ where
   _≈_ f g = ⊤
   isEq : {a b : Car} → IsEquivalence (_≈_ {a} {b})
   isEq = record { refl = tt ; sym = λ {i} {j} _ → tt ; trans = λ _ _ → tt }
+
 
 -- Monotonic function
 record _⇒_ (P Q : Poset) : Set where
@@ -82,16 +79,21 @@ PosetAsCategory P =
     _≈_ = P._≈_  -- arrows are unique by definition
   }
 
+open import EpiMono
+open import Iso
+
 module _ {P : Poset} where
 
   C = PosetAsCategory P
   module C = Category.Category C
   
-  open EpiMono.Core {C = C}
-  open Iso.Core {C = C}
+  open EpiMono.Core C
+  open Iso.Core C
 
   epiArrs : ∀ {p q : C.Object} {f : p C.⇒ q} → epi f 
   epiArrs = record { epic = λ x → tt }
 
   monoArrs : ∀ {p q : C.Object} {f : p C.⇒ q} → mono f 
   monoArrs = record { monic = λ x → tt }
+
+

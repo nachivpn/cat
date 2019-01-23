@@ -1,12 +1,12 @@
 module Category.Mon where
 
-open import Category hiding (refl ; sym ; trans)
 open import Data.Unit
-open import Relation.Binary.PropositionalEquality
-open import Prelude.Function
 open import Data.Nat
-open import Data.Nat.Properties
 open import Data.Bool
+open import Data.Nat.Properties
+open import Category hiding (refl ; sym ; trans)
+open import Relation.Binary.PropositionalEquality
+open import CatPrelude.Function using (id ; _∘_ ; flip)
 
 record Monoid : Set₁ where
   field

@@ -1,0 +1,5 @@
+name: cat
+depend:
+  standard-library
+include :
+  src
