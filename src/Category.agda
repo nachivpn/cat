@@ -2,7 +2,7 @@
 
 module Category where
 
-open import Level as L
+open import Level as L public
 open import Relation.Binary hiding (_⇒_)
 open import Relation.Binary.SetoidReasoning
 open import Data.Unit public

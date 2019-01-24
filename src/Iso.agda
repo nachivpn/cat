@@ -1,48 +1,49 @@
-module Iso where
-
-
-open import Level
-open import Category
+open import Category as CatLib
 open import Relation.Binary hiding (_⇒_)
 open import Relation.Binary.SetoidReasoning
 open import Data.Product
 
-module Core {o a e} (C : Category o a e) where
+module Iso {o a e} (C : Category o a e) where
 
-  open Category.Category C
+  open CatLib.Category C
 
-  record iso {A B} (f : A ⇒ B) : Set (a ⊔ e) where
+  record IsIso {A B : Object} (f : A ⇒ B) : Set (o ⊔ a ⊔ e) where
+
     field
       inv : B ⇒ A
       
-    forth :  A ⇒ B
+    forth : A ⇒ B
     forth = f
 
     back : B ⇒ A
     back = inv
-    
+
     field
-      bnf   : back ∙ forth ≈ Id A
-      fnb   : forth ∙ back ≈ Id B
-      
+      bnf : (back ∙ forth ≈ Id A)
+      fnb : (forth ∙ back ≈ Id B)
 
-  record _≅_ (A B : Object) : Set (a ⊔ e) where
-    field
-      ∃iso : ∃ λ (f : A ⇒ B) → iso f
-
-  open iso
-
+  -- end of IsIso
   
-  unique-inverse : ∀ {A B} {f : A ⇒ B} (iso : iso f) (g : B ⇒ A)
-    → g ∙ forth iso ≈ Id A
-    → forth iso ∙ g ≈ Id B
-    → g ≈ back iso
-  unique-inverse {A} {B} iso g p q =
-    let
-      f = forth iso
-      f⁻¹ = back iso
-    in
-    begin⟨ Hom B A ⟩
+  record _≅_ (X Y : Object) : Set (o ⊔ a ⊔ e) where
+    field
+      ∃iso : ∃ λ (f : X ⇒ Y) → IsIso f
+      
+  -- end of _≅_
+  
+  open IsIso
+
+  -- start of proofs
+  
+  unique-inverse : ∀ {A B} {f : A ⇒ B} (iso : IsIso f) (g : B ⇒ A)
+      → g ∙ forth iso ≈ Id A
+      → forth iso ∙ g ≈ Id B
+      → g ≈ back iso
+  unique-inverse {A} {B} iso g p q =  
+      let
+        f = forth iso
+        f⁻¹ = back iso
+      in
+      begin⟨ Hom B A ⟩
       g
           ≈⟨ sym isEq id-l ⟩
       g ∙ Id B
@@ -56,16 +57,17 @@ module Core {o a e} (C : Category o a e) where
       f⁻¹
      ∎
 
-  refl-≅ : ∀ {A} → A ≅ A
-  refl-≅ {A} = record {
-    ∃iso = (Id A) ,
-      record {
-        inv = Id A ;
-        bnf = id-l ;
-        fnb = id-l
-      }
-    }
 
+  open _≅_
+  
+  refl-≅ : ∀ {A : Object} → A ≅ A
+  refl-≅ {A} = record { ∃iso = (Id A) ,
+    record {
+      inv = Id A ;
+      bnf = id-l ;
+      fnb = id-l } } 
+
+  
   sym-≅ : ∀ {A B} → A ≅ B → B ≅ A
   sym-≅ record { ∃iso = (f , isof) } =
     record {
@@ -112,5 +114,3 @@ module Core {o a e} (C : Category o a e) where
 
   isoIsEq : IsEquivalence _≅_
   isoIsEq = record { refl = refl-≅ ; sym = sym-≅ ; trans = trans-≅ }
-
-                                   
