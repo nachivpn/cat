@@ -1,6 +1,6 @@
 # cat
 
-### Library for writing Category theory proofs in Agda.
+## A library for writing Category theory proofs in Agda
 
 
 Categories are implemented as interfaces (records in Agda).
