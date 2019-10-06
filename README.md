@@ -5,8 +5,7 @@
 
 Categories are implemented as interfaces (records in Agda).
 
-Pretty, but mostly broken. Work in progress.
-
+Mostly broken. ~~Work in progress.~~ **UPDATE**: I'm using [agda-categories](https://github.com/agda/agda-categories/) instead!
 
 
 The implementation of categories in this repository are actually *E-categories*, i.e., categories where morphisms are equipped with an equivalence relation. They arise rather naturally when implementing categories in a constructive framework like Agda. Some references and mentions of E-categories:
